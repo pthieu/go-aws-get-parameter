@@ -1,6 +1,6 @@
 ### AWS SSM Go Binary
 
-This compiles code so that you can use a binary to get AWS SSM secrets without having to install anything else.
+This compiles code so that you can use a binary to get AWS SSM secrets without having to install anything else. If you want to build, make sure you have docker installed.
 
 ### Usage
 
@@ -30,4 +30,15 @@ echo $SECRET_PATH_RESULT_1
 /# secret1
 echo $SECRET_PATH_RESULT_2
 /# secret2
+```
+### To build
+
+Linux
+```
+make build-linux
+```
+
+Mac
+```
+make build-mac
 ```
