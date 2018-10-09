@@ -1,21 +1,33 @@
-# AWS SSM get secret
+### AWS SSM Go Binary
 
-This is a go binary to get a secret and populate an environment variable
-with this said secret.
+This compiles code so that you can use a binary to get AWS SSM secrets without having to install anything else.
 
-Make sure to set `AWS_REGION` because otherwise it will fail.
+### Usage
 
-Usage:
-`./ssm_get_parameter --name <secret-key>`
-`./ssm_get_parameter --path /mypath`
+Make sure to set `AWS_REGION` to your proper region in the shell.
 
-Concrete example
-`export BOSTON=$(./ssm_get_parameter --name jira.url)`
+##### Single Value
+```
+./ssm_get_parameter --name <secret-key>
+```
 
-`echo $BOSTON`
-`https://atlassian.spscommerce.com`
+##### Set Many Environment Variables
+```
+./ssm_get_parameter --path /mypath
+```
 
-Or
+##### Concrete example
+```sh
+export BOSTON=$(./ssm_get_parameter --name jira.url)`
+echo $BOSTON
+/# https://atlassian.boston.com
+```
 
-`eval $(./ssm_get_paramter --path /<secret-path>)`
-`echo $SECRET_PATH_RESULT`
+Or use the multi env var feature by path
+```sh
+eval $(./ssm_get_paramter --path /<secret-path>)
+echo $SECRET_PATH_RESULT_1
+/# secret1
+echo $SECRET_PATH_RESULT_2
+/# secret2
+```
