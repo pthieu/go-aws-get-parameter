@@ -72,7 +72,7 @@ func main() {
 		}
 		for _, v := range resp.Parameters {
 			the_key := strings.Split(*v.Name, "/")
-			fmt.Printf("%s=%s;", the_key[len(the_key)-1], *v.Value)
+			fmt.Printf("export %s=%s\n", the_key[len(the_key)-1], *v.Value)
 		}
 
 	}
