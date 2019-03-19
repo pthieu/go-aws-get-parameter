@@ -26,10 +26,11 @@ steps:
       - go mod download
       - GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ssm_get_parameter
       - ls
-  # - name: upload
-  #   image: plugins/s3
-  #   settings:
-  #     bucket: kloudcover-tools
-  #     acl: public-read
-  #     source: ssm_get_parameter
-  #     target: /tools
+
+  - name: upload
+    image: plugins/s3
+    settings:
+      bucket: kloudcover-tools
+      acl: public-read
+      source: ssm_get_parameter
+      target: /tools
