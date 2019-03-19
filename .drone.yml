@@ -1,19 +1,22 @@
-# ---
-# kind: pipeline
-# name: default
-#
-# steps:
-#   - name: build
-#     image: plugins/docker
-#     settings:
-#       repo: ktruckenmiller/ssm-get-parameter
-#       username:
-#         from_secret: username
-#       password:
-#         from_secret: password
-#       when:
-#         branch: [master]
-#         event: [push]
+---
+kind: pipeline
+name: default
+
+steps:
+  - name: build
+    image: plugins/docker
+    settings:
+      repo: ktruckenmiller/ssm-get-parameter
+      tags: latest
+      username:
+        from_secret: username
+      password:
+        from_secret: password
+      when:
+        branch: [master]
+        event: [push]
+
+
 ---
 kind: pipeline
 name: s3-push
@@ -32,5 +35,6 @@ steps:
     settings:
       bucket: kloudcover-tools
       acl: public-read
+      region: us-west-2
       source: ssm_get_parameter
       target: /tools
