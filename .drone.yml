@@ -21,6 +21,7 @@ steps:
   - name: builder
     image: golang
     commands:
+      - go mod download
       - GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ssm_get_parameter
       - ls
   # - name: upload
