@@ -10,10 +10,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/ssm"
 )
 
-func getParametersByPath() {
-
-}
-
 func getParameter() {
 	if len(os.Args) != 2 {
 		exitErrorf("SSM Key name required\nUsage: %s key_name",
