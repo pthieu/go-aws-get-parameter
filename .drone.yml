@@ -37,4 +37,4 @@ steps:
       acl: public-read
       region: us-west-2
       source: ssm_get_parameter
-      target: /tools
+      target: /binaries
