@@ -1,20 +1,28 @@
+# ---
+# kind: pipeline
+# name: default
+#
+# steps:
+#   - name: build
+#     image: plugins/docker
+#     settings:
+#       repo: ktruckenmiller/ssm-get-parameter
+#       username:
+#         from_secret: username
+#       password:
+#         from_secret: password
+#       when:
+#         branch: [master]
+#         event: [push]
+---
 kind: pipeline
-name: default
-
+name: s3-push
 steps:
-  - name: build
-    image: plugins/docker
-    settings:
-      repo: ktruckenmiller/ssm-get-parameter
-      username:
-        from_secret: username
-      password:
-        from_secret: password
-      when:
-        branch: [master]
-        event: [push]
-
-
+  - name: builder
+    image: golang
+    commands:
+      - GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ssm_get_parameter
+      - ls
   # - name: upload
   #   image: plugins/s3
   #   settings:
