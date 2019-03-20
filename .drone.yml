@@ -31,7 +31,7 @@ steps:
 
   - name: upload-linux
     image: plugins/s3
-    depends_on: [ builder ]
+    depends_on: [ build-linux ]
     settings:
       bucket: kloudcover-tools
       acl: public-read
