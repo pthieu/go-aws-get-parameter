@@ -9,6 +9,7 @@ build-mac:
 develop: build-docker
 	docker run -it --rm \
 	-v $(shell pwd):$(shell pwd) \
+	-w $(shell pwd) \
 	-e GOOS=linux \
 	-e GOARCH=386 \
 	-e CGO_ENABLED=0 \
@@ -17,4 +18,4 @@ develop: build-docker
 	ssm-get-parameter sh
 
 build-docker:
-	docker build -t ssm-get-parameter .
+	docker build -t ssm-get-parameter --target BUILDER .

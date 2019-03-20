@@ -10,49 +10,27 @@ import (
 	"github.com/aws/aws-sdk-go/service/ssm"
 )
 
-func getParameter() {
-	if len(os.Args) != 2 {
-		exitErrorf("SSM Key name required\nUsage: %s key_name",
-			os.Args[0])
-	}
-
-	key_name := os.Args[1]
-
-	// Create S3 service client
-	svc := ssm.New(session.New())
-
-	params := &ssm.GetParameterInput{
-		Name:           aws.String(key_name),
-		WithDecryption: aws.Bool(true),
-	}
-
-	// Get the list of items
-	resp, err := svc.GetParameter(params)
-
-	if err != nil {
-		exitErrorf("Unable to get key %q, %v", key_name, err)
-	}
-
-	fmt.Println(*resp.Parameter.Value)
-}
-
 func main() {
-
+	var region = flag.String("region", "us-west-2", "AWS Region")
 	var path = flag.String("path", "", "parameter path")
-	var value = flag.String("name", "", "single parameter value")
+	var param_name = flag.String("name", "", "single parameter value")
 	flag.Parse()
 
+	// Make sure users set values
+	if *path == "" && *param_name == "" {
+		exitErrorf("Make sure you set --path or --name as arguments")
+	}
 	// Create SSM service client
-	svc := ssm.New(session.New())
+	svc := ssm.New(session.New(&aws.Config{Region: aws.String(*region)}))
 
 	if *path == "" {
 		params := &ssm.GetParameterInput{
-			Name:           aws.String(*value),
+			Name:           aws.String(*param_name),
 			WithDecryption: aws.Bool(true),
 		}
 		resp, err := svc.GetParameter(params)
 		if err != nil {
-			exitErrorf("Unable to get key %q, %v", *value, err)
+			exitErrorf("Unable to get key %q, %v", *param_name, err)
 		}
 		fmt.Println(*resp.Parameter.Value)
 
