@@ -8,21 +8,25 @@ Download the executable [here](https://s3-us-west-2.amazonaws.com/kloudcover-too
 ```sh
 wget https://s3-us-west-2.amazonaws.com/kloudcover-tools/binaries/ssm_get_parameter
 chmod +x ssm_get_parameter
+
+# If running alpine linux, run `apk add ca-certificates`
 export MY_SECRET=$(./ssm_get_parameter --name /dev/my-secret)
 
 echo $MY_SECRET
 # SECRET
 ```
 
-##### Get all params in a path
+##### Get all params in a path and set as ENV vars
 
 ```sh
 # Get the executable
 wget https://s3-us-west-2.amazonaws.com/kloudcover-tools/binaries/ssm_get_parameter
 chmod +x ssm_get_parameter
 
+# If running alpine linux, run `apk add ca-certificates`
+
 # set all vars in a path
-eval $(./ssm_get_paramter --path /<secret-path>)
+eval $(./ssm_get_parameter --path /<secret-path>)
 echo $SECRET_PATH_RESULT_1
 /# secret1
 echo $SECRET_PATH_RESULT_2
@@ -30,46 +34,13 @@ echo $SECRET_PATH_RESULT_2
 
 ```
 
+#### Flags
+| Flag Name | Default | Description |
+| --------- | ------- | ----------- |
+| `--region` | `us-west-2` | AWS Region to get Param from |
+| `--name`| `None` | The SSM parameter name |
+| `--path` | `None` | The SSM parameter path |
 
-This compiles code so that you can use a binary to get AWS SSM secrets without having to install anything else. If you want to build, make sure you have docker installed.
+#### Why?
 
-### Usage
-
-Make sure to set `AWS_REGION` to your proper region in the shell.
-
-##### Single Value
-```
-./ssm_get_parameter --name <ssm name>
-```
-
-##### Set Many Environment Variables
-```
-./ssm_get_parameter --path /mypath
-```
-
-##### Concrete example
-```sh
-export BOSTON=$(./ssm_get_parameter --name jira.url)`
-echo $BOSTON
-/# https://atlassian.boston.com
-```
-
-Or use the multi env var feature by path
-```sh
-eval $(./ssm_get_paramter --path /<secret-path>)
-echo $SECRET_PATH_RESULT_1
-/# secret1
-echo $SECRET_PATH_RESULT_2
-/# secret2
-```
-### To build
-
-Linux
-```
-make build-linux
-```
-
-Mac
-```
-make build-mac
-```
+Sometimes you inherit legacy software or have to shim in secrets because people don't think about storing them securely when making apps. This binary allows you to add that functionality in a shell script so that you can enable this functionality in your deployable.

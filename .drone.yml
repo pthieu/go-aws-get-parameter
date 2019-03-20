@@ -3,8 +3,9 @@ kind: pipeline
 name: default
 
 steps:
-  - name: build
+  - name: build-docker
     image: plugins/docker
+    depends_on: [ clone ]
     settings:
       repo: ktruckenmiller/ssm-get-parameter
       tags: latest
@@ -16,21 +17,21 @@ steps:
         branch: [master]
         event: [push]
 
-
----
-kind: pipeline
-name: s3-push
-steps:
-  - name: builder
+  - name: build-linux
     image: golang
+    depends_on: [ clone ]
     environment:
       GO111MODULE: on
+      CGO_ENABLED: 0
+      GOOS: linux
+      GOARCH: amd64
     commands:
       - go mod download
-      - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ssm_get_parameter
+      - go build -ldflags="-w -s" -o ssm_get_parameter
 
-  - name: upload
+  - name: upload-linux
     image: plugins/s3
+    depends_on: [ builder ]
     settings:
       bucket: kloudcover-tools
       acl: public-read

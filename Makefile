@@ -6,7 +6,7 @@ build-linux:
 build-mac:
 	go build -o $(exec_name) ssm_get_parameter.go
 
-develop: build-docker
+develop: build-develop
 	docker run -it --rm \
 	-v $(shell pwd):$(shell pwd) \
 	-w $(shell pwd) \
@@ -17,5 +17,8 @@ develop: build-docker
 	-e IAM_ROLE \
 	ssm-get-parameter sh
 
-build-docker:
+build-develop:
 	docker build -t ssm-get-parameter --target BUILDER .
+
+build-docker:
+	docker build -t ssm-get-parameter .
