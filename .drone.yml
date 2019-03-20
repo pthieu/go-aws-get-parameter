@@ -27,8 +27,7 @@ steps:
       GO111MODULE: on
     commands:
       - go mod download
-      - GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ssm_get_parameter
-      - ls
+      - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ssm_get_parameter
 
   - name: upload
     image: plugins/s3

@@ -1,4 +1,9 @@
-### AWS SSM Go Binary
+### AWS Get Parameter
+
+##### Tl;DR;
+Download the executable [here](https://s3-us-west-2.amazonaws.com/kloudcover-tools/binaries/ssm_get_parameter).
+
+
 
 This compiles code so that you can use a binary to get AWS SSM secrets without having to install anything else. If you want to build, make sure you have docker installed.
 
@@ -8,7 +13,7 @@ Make sure to set `AWS_REGION` to your proper region in the shell.
 
 ##### Single Value
 ```
-./ssm_get_parameter --name <secret-key>
+./ssm_get_parameter --name <ssm name>
 ```
 
 ##### Set Many Environment Variables
