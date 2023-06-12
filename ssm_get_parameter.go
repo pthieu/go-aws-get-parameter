@@ -1,10 +1,11 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
-	"flag"
 	"strings"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
@@ -37,7 +38,7 @@ func main() {
 	} else {
 		params := &ssm.GetParametersByPathInput{
 			Path:           aws.String(*path),
-			Recursive: 			aws.Bool(true),
+			Recursive:      aws.Bool(true),
 			WithDecryption: aws.Bool(true),
 		}
 		resp, err := svc.GetParametersByPath(params)
