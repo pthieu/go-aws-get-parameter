@@ -1,16 +1,22 @@
 ### AWS Get Parameter
 
-##### Tl;DR;
-Download the executable [here](https://s3-us-west-2.amazonaws.com/kloudcover-tools/binaries/ssm_get_parameter).
+##### TLDR
+Download the executable [here](https://github.com/pthieu/go-aws-get-parameter/blob/master/ssm_get_parameter).
+
+#### Build
+```
+GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ssm_get_parameter
+```
+Change `GOOS` and `GOARCH` to your desired platform.
 
 ##### Get a Single Param
 
 ```sh
-wget https://s3-us-west-2.amazonaws.com/kloudcover-tools/binaries/ssm_get_parameter
+wget https://github.com/pthieu/go-aws-get-parameter/blob/master/ssm_get_parameter
 chmod +x ssm_get_parameter
 
 # If running alpine linux, run `apk add ca-certificates`
-export MY_SECRET=$(./ssm_get_parameter --name /dev/my-secret)
+export MY_SECRET=$(./ssm_get_parameter --name /secret/path/var)
 
 echo $MY_SECRET
 # SECRET
@@ -20,13 +26,13 @@ echo $MY_SECRET
 
 ```sh
 # Get the executable
-wget https://s3-us-west-2.amazonaws.com/kloudcover-tools/binaries/ssm_get_parameter
+wget https://github.com/pthieu/go-aws-get-parameter/blob/master/ssm_get_parameter
 chmod +x ssm_get_parameter
 
 # If running alpine linux, run `apk add ca-certificates`
 
 # set all vars in a path
-eval $(./ssm_get_parameter --path /<secret-path>)
+eval $(./ssm_get_parameter --path /secret/path)
 echo $SECRET_PATH_RESULT_1
 /# secret1
 echo $SECRET_PATH_RESULT_2
